@@ -21,17 +21,17 @@ const showForm = (req, res) => {
 
 const sendForm = (req, resp) => {
     const { name, price, stock, image } = req.body;
-    const product = {
-        productName: name,
-        productPrice: price,
-        productStock: stock,
-        productImg: image
-    };
+    // const product = {
+    //     productName: name,
+    //     productPrice: price,
+    //     productStock: stock,
+    //     productImg: image
+    // };
 
-    console.log(product);
+    // console.log(product);
 
 
-    products.push(product);
+    // products.push(product);
 
     // fs.writeFileSync('files/prductsSynch.txt', JSON.stringify(products));
 

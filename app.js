@@ -9,6 +9,7 @@ import hbs from 'hbs';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import productRouter from './routes/products.js';
+import mongooseRouter from './routes/mongooseRouter.js'
 
 const app = express();
 
@@ -26,8 +27,10 @@ hbs.registerPartials('views/partials');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/products', productRouter);
+app.use('/products', mongooseRouter);
 
+
+//Importamos las rutas que utiliza la lib mongoose
 //Errors
 app.get('*', (req, resp) =>{
   resp.render('error', {

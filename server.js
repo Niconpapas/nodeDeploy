@@ -1,9 +1,15 @@
 import app from './app.js';
 import dotEnv from 'dotenv';
 
-import connectDB from './database/connect.js';
+//import connectDB from './database/connect.js';
+import connectMongoose from './database/mongooseConnect.js';
 
-connectDB();
+
+
+//connectDB();  //mongoDB
+
+//Con mongoose
+//connectMongoose();
 
 dotEnv.config();
 
