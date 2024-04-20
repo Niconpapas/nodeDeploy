@@ -7,9 +7,12 @@ const database = 'cursoNode';
 
 dotenv.config();
 
-const MONGO_LOCAL = process.env.MONGO_LOCAL;
+//const MONGO_LOCAL = process.env.MONGO_LOCAL;
 const MONGO_ATLAS = process.env.MONGO_ATLAS;
-const client = new MongoClient(MONGO_ATLAS);
+//const client = new MongoClient(MONGO_ATLAS);
+
+const client = new MongoClient('mongodb+srv://fnc1001:U04NoQIUZJTbv38r@cluster0.xduuynj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+
 
 
 let products = [];
