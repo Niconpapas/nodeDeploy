@@ -17,14 +17,11 @@ const sendForm = async (req, res) => {
             image: image
         });
         console.log(producto);
+
         //Enviar a DB 
-        // await Product.save(producto, (err, producto) => {
-        //     if (err) {
-        //         console.log(err);
-        //         return res.render({ message: err });
-        //     }
-        // });
-        await producto.save();
+        producto.save().catch((err) => {
+            return res.render({ message: err });
+        });
 
         return res.send(producto);
     }
