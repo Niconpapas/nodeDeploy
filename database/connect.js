@@ -40,8 +40,9 @@ dotenv.config();
 
 const MONGO_LOCAL = process.env.MONGO_LOCAL;
 const MONGO_ATLAS = process.env.MONGO_ATLAS;
+const MONGOOSE_LOCAL = process.env.MONGOOSE_LOCAL;
 
-const client = new MongoClient(MONGO_ATLAS);
+const client = new MongoClient(MONGOOSE_LOCAL);
 
 const connectDB = async () => {
     try{

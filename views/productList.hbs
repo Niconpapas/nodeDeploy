@@ -1,0 +1,30 @@
+<div>
+    <table class="table table-striped m-5">
+        <div class="m-5">
+            {{messsage}}
+        </div>
+
+
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Stock</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each products}}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{name}}</td>
+                <td>{{price}}</td>
+                <td><img src={{image}}></td>
+                <td>{{stock}}</td>
+
+            </tr>
+            {{/each}}
+    </table>
+</div>
