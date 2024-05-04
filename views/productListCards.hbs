@@ -1,12 +1,28 @@
-<div class="m-5 text-center">
+<div>
     {{message}}
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+
+</div>
+<div class="m-5 text-center d-flex flex-row">
+
+    {{#each products}}
+
+    <div class="card m-2" style="width: 18rem;">
+        <img src={{image}} class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" class="btn btn-success">Go somewhere</a>
+            <h5 class="card-title">{{name}}</h5>
+            <p class="card-text">Stock: {{stock}}</p>
+            <p class="card-text">Precio: {{price}}</p>
+            <p class="card-text">{{_id}}</p>
+            {{!-- <a href="/products/product/{{_id}}" class="btn btn-success m-1">Ver Prodcuto</a> --}}
+            <form action="/products/product/{{_id}}" method="post">
+                <button type="submit" name="your_name" value="your_value" class="btn btn-success m-1"
+                    style="text-decoration: none">Ver
+                    Producto</button>
+            </form>
+            <a href="#" class="btn btn-danger m-1">Eliminar</a>
+            <a href="#" class="btn btn-warning m-1">Actualizar</a>
+
         </div>
     </div>
+    {{/each}}
 </div>

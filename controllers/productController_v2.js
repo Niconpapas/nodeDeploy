@@ -1,8 +1,6 @@
 //Con mongoose
 import Product from '../models/productModel.js';
 
-//const product = new Product();
-
 const showForm = (req, res) => {
     res.render('productRegister', {
         title: "Registrar producto"
@@ -16,21 +14,20 @@ const sendForm = async (req, res) => {
             name: name,
             price: price,
             stock: stock,
-            image: image
+            image: image.lenght == 0  ? image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZH8sToqqq_j0UrGvX0wNTXHrk5445Pgamk-LZj_bbQQ&s"
         });
         console.log(producto);
 
         //Enviar a DB 
-        producto.save().catch((err) => {
-            return res.render({ message: err });
-        });
-
-        return res.send(producto);
+        await producto.save();
+        return res.render('productRegistered');
     }
     catch (err) {
         console.log(err);
-        return res.render({ message: err });
+        return res.render('error', { message: err });
     }
+
+    
 };
 
 const listProductsTable = async (req, resp) => {
@@ -68,4 +65,20 @@ const listProductsCard = async (req, resp) => {
     }
 };
 
-export { showForm, sendForm, listProductsTable, listProductsCard }
+const viewSingleProduct = async (req, res) => {
+    const id = req.params._id;
+    const singleProduct = await Product.findById({_id: id});
+    console.log(id);
+
+    try {
+        return res.render('productDetails',{
+            product: singleProduct
+        });
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
+export { showForm, sendForm, listProductsTable, listProductsCard, viewSingleProduct }
