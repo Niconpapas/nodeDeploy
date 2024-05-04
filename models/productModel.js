@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-const { schema } = mongoose;
+//const { schema } = mongoose;
 
 const productSchema = new Schema({
     name : {
@@ -21,7 +21,12 @@ const productSchema = new Schema({
     timeStamp : {
         type : Date,
         default : Date.now
+    },
+    available : {
+        type : Boolean,
+        default : true
     }
+
 });
 
 export default model('Product', productSchema);

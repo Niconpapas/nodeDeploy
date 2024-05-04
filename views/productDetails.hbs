@@ -1,0 +1,19 @@
+<div>
+    {{message}}
+</div>
+<div class="m-5 text-center d-flex flex-row">
+    <div class="card m-2" style="width: 18rem;">
+        <img src={{product.image}} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">Stock: {{product.stock}}</p>
+            <p class="card-text">Precio: $ {{product.price}}</p>
+            <p class="card-text">{{product._id}}</p>
+            {{!-- <a href="/products/product/{{_id}}" class="btn btn-success m-1">Ver Prodcuto</a> --}}
+            <a href="/products/listCards" class="btn btn-success m-1">Volver al Listado</a>
+            <a href="#" class="btn btn-success m-1">Comprar</a>
+            <a href="#" class="btn btn-warning m-1">Actualizar</a>
+
+        </div>
+    </div>
+</div>
