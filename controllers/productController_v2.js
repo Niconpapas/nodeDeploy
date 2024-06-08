@@ -1,6 +1,8 @@
 //Con mongoose
 import Product from '../models/productModel.js';
 import { request, response } from 'express';
+import jwt from "jsonwebtoken";
+
 
 const showForm = (req, res) => {
     res.render('productRegister', {
@@ -49,7 +51,23 @@ const listProductsTable = async (req, resp) => {
 
 };
 
-const listProductsCard = async (req, resp) => {
+const listProductsCard = async (req = request, resp = response) => {
+
+    try {
+        const cookieToken = req.cookies.xToken;
+        const validToken = await jwt.verify(cookieToken, process.env.APP_JWT);
+
+        if (!validToken) {
+            return resp.render('error', {
+                message: "Token invalido"
+            });
+        }
+    }
+    catch (err) {
+        return resp.render('error', {
+            message: "Token invalido"
+        });
+    }
     try {
         const productList = await Product.find();
 

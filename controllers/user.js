@@ -2,8 +2,31 @@ import { request, response } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+import sendEmail from "../services/mailRegisterResponse.js";
+import { generateJWT, verifyJWT } from "../services/jwt.js";
+import jwt from "jsonwebtoken";
 
-const getLoginForm = (req = request, res = response) => {
+
+const getLoginForm = async (req = request, res = response) => {
+
+
+    const cookieToken = req.cookies.xToken;
+    if (cookieToken != null) {
+        try {
+            const validToken = await jwt.verify(cookieToken, process.env.APP_JWT);
+            if (validToken) {
+                return res.render('userLogin', {
+                    error_msg: 'Usuario ya logeado'
+                });
+            }
+        }
+        catch(err) {
+            res.render('userLogin', {
+                error_msg: "Login"
+            });
+        };
+    }
+
     res.render('userLogin');
 };
 
@@ -13,7 +36,6 @@ const getRegisterForm = (req = request, res = response) => {
 
 const userRegister = async (req = request, res = response) => {
     const errors = validationResult(req);
-    console.log(errors);
 
     if (!errors.isEmpty()) {
         return res.render('userRegister', {
@@ -31,7 +53,6 @@ const userRegister = async (req = request, res = response) => {
             email: email,
             password: await bcrypt.hash(password, salt)
         });
-        console.log(user);
 
         //Enviar a DB 
         await user.save();
@@ -39,6 +60,7 @@ const userRegister = async (req = request, res = response) => {
         //asiganr jwt al user
 
         //enviar mail de bienvenida
+        //await sendEmail(user.email);
 
         return res.render('index');
     }
@@ -48,15 +70,15 @@ const userRegister = async (req = request, res = response) => {
                 error_msg: "Email duplicado"
             });
         }
-        console.log(err.code);
-        return res.render('error', { message: err });
+        return res.render('error', { message: err.message });
     }
 
 };
 
 const userLogin = async (req = request, res = response) => {
+    
+
     const errors = validationResult(req);
-    console.log(errors);
 
     if (!errors.isEmpty()) {
         return res.render('userLogin', {
@@ -73,8 +95,7 @@ const userLogin = async (req = request, res = response) => {
     };
 
     const userExists = await User.find({ email: email });
-    console.log("----");
-    console.log(userExists);
+
 
     if (!userExists) {
         res.render('userLogin', {
@@ -82,16 +103,32 @@ const userLogin = async (req = request, res = response) => {
         });
     }
 
-    try {   
-        console.log("adasdaa");
+    try {
         const checkPassword = await bcrypt.compareSync(password, userExists[0].password);
-        console.log("---2");
-        console.log(checkPassword);
 
-        if(!checkPassword){
-            res.render('userLogin', {
+        if (!checkPassword) {
+            return res.render('userLogin', {
                 error_msg: "email/password incorretos"
             });
+        }
+        else {
+            const token = await generateJWT(userExists);
+
+            //Add token to the session
+            req.session.user = {
+                _id: userExists[0].id,
+                nombre: userExists[0].name,
+                email: userExists[0].email,
+                token: token
+            };
+
+            await req.session.save();
+
+            console.log("Usuario autenticado");
+
+            res.cookie('xToken', token); //Set custom headers / cookies
+
+            res.render('index');
         }
     } catch (error) {
         console.log(error);
@@ -100,15 +137,5 @@ const userLogin = async (req = request, res = response) => {
         });
     }
 };
-
-//Enviar a DB 
-
-
-//asiganr jwt al user
-
-//enviar mail de bienvenida
-
-
-
 
 export { getLoginForm, getRegisterForm, userRegister, userLogin };
