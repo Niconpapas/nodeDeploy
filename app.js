@@ -38,7 +38,7 @@ app.use(session({
   saveUninitialized: false, // don't create session until something stored
   resave: false, //don't save session if unmodified
   store: MongoStore.create({
-    mongoUrl: process.env.MONGOOSE_LOCAL,
+    mongoUrl: process.env.MONGOOSE_ATLAS,
     touchAfter: 24 * 3600 // time period in seconds
   }),
   cookie:{

@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-//const { schema } = mongoose;
+//const { Schema } = mongoose;
 
 const productSchema = new Schema({
     name : {
