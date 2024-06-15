@@ -35,13 +35,13 @@ hbs.registerPartials('views/partials');
 const sessionKey = process.env.SECRET_SESSION;
 const sessionDB = process.env.MONGOOSE_ATLAS;
 app.use(session({
-  secret: sessionKey,
-  saveUninitialized: false, // don't create session until something stored
-  resave: false, //don't save session if unmodified
   store: new MongoStore({
     mongoUrl: sessionDB,
     touchAfter: 24 * 3600 // time period in seconds
   }),
+  secret: sessionKey,
+  saveUninitialized: false, // don't create session until something stored
+  resave: false, //don't save session if unmodified
   cookie:{
     maxAge:60000
   }
