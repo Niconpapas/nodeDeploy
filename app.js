@@ -33,11 +33,12 @@ hbs.registerPartials('views/partials');
 
 //sesion con mongo storage / connect mongo
 const sessionKey = process.env.SECRET_SESSION;
+//const sessionUrl = process.env.MONGOOSE_ATLAS;
 app.use(session({
   secret: sessionKey,
   saveUninitialized: false, // don't create session until something stored
   resave: false, //don't save session if unmodified
-  store: MongoStore.create({
+  store: new MongoStore({
     mongoUrl: process.env.MONGOOSE_ATLAS,
     touchAfter: 24 * 3600 // time period in seconds
   }),
