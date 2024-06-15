@@ -35,8 +35,8 @@ hbs.registerPartials('views/partials');
 const sessionKey = process.env.SECRET_SESSION;
 const sessionDB = process.env.MONGOOSE_ATLAS;
 app.use(session({
-  store: new MongoStore({
-    mongoUrl: sessionDB,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://cluster0.xduuynj.mongodb.net/cursoNodeMongoose',
     touchAfter: 24 * 3600, // time period in seconds,
     collectionName : 'sessions'
   }),
