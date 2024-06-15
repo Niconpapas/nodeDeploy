@@ -37,7 +37,8 @@ const sessionDB = process.env.MONGOOSE_ATLAS;
 app.use(session({
   store: new MongoStore({
     mongoUrl: sessionDB,
-    touchAfter: 24 * 3600 // time period in seconds
+    touchAfter: 24 * 3600, // time period in seconds,
+    collectionName : 'sessions'
   }),
   secret: sessionKey,
   saveUninitialized: false, // don't create session until something stored
