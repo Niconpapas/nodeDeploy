@@ -5,7 +5,7 @@ const database = 'cursoNode';
 
 dotenv.config();
 
-const connString = process.env.MONGOOSE_LOCAL;
+const connString = process.env.MONGOOSE_ATLAS;
 
 
 const connectMongoose = mongoose.connect(connString).then(
