@@ -163,4 +163,5 @@ const deleteSingleProduct = async (req = request, res = response) => {
 }
 
 
+
 export { showForm, sendForm, listProductsTable, listProductsCard, viewSingleProduct, updateSingleProduct, deleteSingleProduct, updateProductForm }

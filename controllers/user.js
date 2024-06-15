@@ -22,7 +22,7 @@ const getLoginForm = async (req = request, res = response) => {
         }
         catch(err) {
             res.render('userLogin', {
-                error_msg: "Login"
+                error_msg: "Login Error"
             });
         };
     }
@@ -138,4 +138,11 @@ const userLogin = async (req = request, res = response) => {
     }
 };
 
-export { getLoginForm, getRegisterForm, userRegister, userLogin };
+const userLogout = async (req = request, res = response) => {
+    res.clearCookie('xToken');
+    req.session.destroy(); //Borra en la db
+    res.clearCookie('connect.sid'); //Borra en el browser
+    res.render('index');
+}
+
+export { getLoginForm, getRegisterForm, userRegister, userLogin, userLogout };
